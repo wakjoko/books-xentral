@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa322c53454393ed775cfe4807d54a50",
+    "content-hash": "b8bdb5ad43a88f693fb9fc9820f56b57",
     "packages": [
         {
             "name": "brick/math",
@@ -2328,6 +2328,56 @@
                 }
             ],
             "time": "2023-02-25T19:38:58+00:00"
+        },
+        {
+            "name": "phpro/api-problem",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpro/api-problem.git",
+                "reference": "7e3784836dcb154a91c6e827daf8fd4200ecb1b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpro/api-problem/zipball/7e3784836dcb154a91c6e827daf8fd4200ecb1b9",
+                "reference": "7e3784836dcb154a91c6e827daf8fd4200ecb1b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "phpro/grumphp-shim": "^1.14",
+                "phpspec/phpspec": "^7.2",
+                "sebastian/comparator": "^4.0",
+                "symfony/validator": "^5.4 || ^6.0"
+            },
+            "suggest": {
+                "symfony/validator": "If you want to use the ValidationApiProblem"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpro\\ApiProblem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Verwerft",
+                    "email": "toon.verwerft@phpro.be"
+                }
+            ],
+            "description": "RFC7807 Problem details implementation",
+            "support": {
+                "issues": "https://github.com/phpro/api-problem/issues",
+                "source": "https://github.com/phpro/api-problem/tree/v1.6.0"
+            },
+            "time": "2022-11-25T11:56:32+00:00"
         },
         {
             "name": "psr/container",
