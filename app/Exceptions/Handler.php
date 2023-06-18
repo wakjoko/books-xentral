@@ -2,8 +2,16 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Request;
+use App\Support\HttpApiFormat;
+use Phpro\ApiProblem\Http\NotFoundProblem;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Phpro\ApiProblem\Http\UnauthorizedProblem;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +31,65 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        $this->renderable($this->handleNotFoundHttpException(...));
+        $this->renderable($this->handleTooManyRequestsHttpException(...));
+        $this->renderable($this->handleAuthenticationException(...));
+        $this->renderable($this->handleValidationException(...));
+    }
+
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
+    protected function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
+    {
+        if ($request->is('api/*')) {
+            $message = $e->getMessage();
+            $notFoundProblem = new NotFoundProblem($message);
+
+            return response($notFoundProblem->toArray(), $e->getStatusCode());
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
+    protected function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
+    {
+        if ($request->is('api/*')) {
+            $retryAfter = $e->getHeaders()['Retry-After'];
+            $tooManyRequestsProblem = new HttpApiFormat($e->getStatusCode(), [
+                'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
+            ]);
+
+            return response($tooManyRequestsProblem->toArray(), Response::HTTP_TOO_MANY_REQUESTS);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
+    protected function handleAuthenticationException(AuthenticationException $e, Request $request)
+    {
+        if ($request->is('api/*')) {
+            $message = $e->getMessage();
+            $unauthorizedProblem = new UnauthorizedProblem($message);
+
+            return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
+    protected function handleValidationException(ValidationException $e, Request $request)
+    {
+        if ($request->is('api/*')) {
+            $message = $e->getMessage();
+            $unprocessableEntityProblem = new HttpApiFormat(Response::HTTP_UNPROCESSABLE_ENTITY, [
+                'detail' => $message,
+            ]);
+
+            return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 }
