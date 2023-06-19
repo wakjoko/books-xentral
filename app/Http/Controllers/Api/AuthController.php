@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Enums\TokenStatusEnum;
-use Illuminate\Http\JsonResponse;
-use App\Http\Requests\LoginRequest;
-use App\Models\PersonalAccessToken;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\PersonalAccessTokenResource;
+use App\Http\Resources\UserResource;
+use App\Models\PersonalAccessToken;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class AuthController extends Controller
 {
@@ -25,6 +25,7 @@ final class AuthController extends Controller
         $createdUser = User::create($validated);
         $userResource = new UserResource($createdUser);
         $userResource->withResponse($request, new JsonResponse(status: Response::HTTP_CREATED));
+
         return $userResource;
     }
 

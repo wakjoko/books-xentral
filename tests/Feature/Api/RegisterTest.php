@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
-use Tests\Traits\UserStructure;
-use Tests\Traits\ResourceAssertion;
-use Tests\Traits\ResourceStructure;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\ResourceAssertion;
+use Tests\Traits\ResourceStructure;
+use Tests\Traits\UserStructure;
 
 class RegisterTest extends TestCase
 {

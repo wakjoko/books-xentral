@@ -2,16 +2,16 @@
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
-use Tests\Traits\WithUser;
 use App\Enums\TokenStatusEnum;
-use Tests\Traits\ResourceAssertion;
-use Tests\Traits\ResourceStructure;
+use Database\Factories\PersonalAccessTokenFactory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
-use Database\Factories\PersonalAccessTokenFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\ResourceAssertion;
+use Tests\Traits\ResourceStructure;
+use Tests\Traits\WithUser;
 
 class LogoutTest extends TestCase
 {
@@ -47,7 +47,7 @@ class LogoutTest extends TestCase
 
         $response = $this->withHeader(
             name: 'Authorization',
-            value: 'Bearer ' . $token->id . '|' . PersonalAccessTokenFactory::DEFAULT_PLAIN_TEXT_TOKEN,
+            value: 'Bearer '.$token->id.'|'.PersonalAccessTokenFactory::DEFAULT_PLAIN_TEXT_TOKEN,
         )->post(uri: route('logout'));
 
         $response->assertOk();

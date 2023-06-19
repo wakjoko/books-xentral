@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Api;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
-use Tests\Traits\WithUser;
 use Tests\Traits\ResourceAssertion;
 use Tests\Traits\ResourceStructure;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\WithUser;
 
 class ShowLoggedInUserTest extends TestCase
 {
