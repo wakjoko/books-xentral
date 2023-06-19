@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Http\Request;
 use App\Support\HttpApiFormat;
-use Phpro\ApiProblem\Http\NotFoundProblem;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Phpro\ApiProblem\Http\NotFoundProblem;
 use Phpro\ApiProblem\Http\UnauthorizedProblem;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 

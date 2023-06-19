@@ -2,23 +2,23 @@
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
-use App\Models\User;
-use Tests\Traits\WithUser;
-use Illuminate\Support\Str;
 use App\Enums\TokenStatusEnum;
-use Illuminate\Support\Carbon;
-use Illuminate\Cache\RateLimiter;
 use App\Http\Requests\LoginRequest;
 use App\Models\PersonalAccessToken;
+use App\Models\User;
 use Database\Factories\UserFactory;
-use Tests\Traits\ResourceAssertion;
-use Tests\Traits\ResourceStructure;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\ResourceAssertion;
+use Tests\Traits\ResourceStructure;
+use Tests\Traits\WithUser;
 
 class LoginTest extends TestCase
 {
@@ -94,9 +94,8 @@ class LoginTest extends TestCase
             'email' => $this->faker->email,
             'password' => $this->faker->randomAscii,
             'token_name' => $this->faker->word,
-            'expires_at' => 
-                Carbon::createFromInterface($this->faker->dateTimeBetween('today', '+1 month'))
-                    ->format('d-m-Y'),  // wrong date format
+            'expires_at' => Carbon::createFromInterface($this->faker->dateTimeBetween('today', '+1 month'))
+                ->format('d-m-Y'),  // wrong date format
         ]);
 
         $response->assertUnprocessable();
@@ -115,7 +114,7 @@ class LoginTest extends TestCase
     {
         /** @var RateLimiter $rateLimiter */
         $rateLimiter = $this->app->make(abstract: RateLimiter::class);
-        $throttleKey = Str::lower("{$this->user->email}|") . Request::ip();
+        $throttleKey = Str::lower("{$this->user->email}|").Request::ip();
 
         collect(range(1, LoginRequest::MAX_ATTEMPTS))->each(function () use ($rateLimiter, $throttleKey): void {
             $this->app->call(callback: [$rateLimiter, 'hit'], parameters: ['key' => $throttleKey]);
