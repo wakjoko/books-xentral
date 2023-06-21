@@ -9,7 +9,7 @@ use Tests\Traits\ResourceAssertion;
 use Tests\Traits\ResourceStructure;
 use Tests\Traits\WithUser;
 
-class ShowLoggedInUserTest extends TestCase
+class GetLoggedInUserTest extends TestCase
 {
     use RefreshDatabase;
     use ResourceAssertion;
@@ -24,7 +24,7 @@ class ShowLoggedInUserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->setUpUser();
+        $this->createUser();
     }
 
     /**
