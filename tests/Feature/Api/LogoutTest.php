@@ -32,7 +32,7 @@ class LogoutTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->setUpUser();
+        $this->createUser();
     }
 
     /**

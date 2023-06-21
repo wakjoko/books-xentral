@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -54,5 +55,10 @@ class User extends Authenticatable
         return new Attribute(
             set: fn (string $value) => Hash::createArgon2idDriver()->make($value),
         );
+    }
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class, 'user_id');
     }
 }

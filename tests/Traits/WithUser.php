@@ -9,8 +9,12 @@ trait WithUser
 {
     private User $user;
 
-    private function setUpUser(): void
+    private function createUser(): void
     {
-        $this->user = User::factory()->has(PersonalAccessToken::factory(), 'tokens')->createOne();
+        PersonalAccessToken::truncate();
+
+        $this->user = User::factory()
+            ->has(PersonalAccessToken::factory(), 'tokens')
+            ->createOne();
     }
 }
