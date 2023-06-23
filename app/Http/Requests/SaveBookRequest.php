@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Book;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
@@ -48,7 +49,7 @@ class SaveBookRequest extends FormRequest
          * set default status_id only when storing a new book
          */
         if ($doesntContainId) {
-            $add['status_id'] = 1;
+            $add['status_id'] = array_key_first(Book::STATUSES);
         }
 
         return array_merge($validated, $add);
