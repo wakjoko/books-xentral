@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reading_progresses', function (Blueprint $table) {
+        Schema::create('reading_progress', function (Blueprint $table) {
             $table->id();
             $table->foreignId('book_id')->references('id')->on('books');
             $table->unsignedInteger('last_page');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reading_progresses');
+        Schema::dropIfExists('reading_progress');
     }
 };

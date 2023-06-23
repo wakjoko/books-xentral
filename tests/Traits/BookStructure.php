@@ -10,5 +10,7 @@ trait BookStructure
         'genre',
         'total_pages',
         'status_id',
+        'last_page_read',
+        'reading_progress',
     ];
 }
