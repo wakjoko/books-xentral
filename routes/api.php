@@ -13,6 +13,6 @@ Route::controller(AuthController::class)->group(function (): void {
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('user', UserController::class)->name('user');
-    Route::put('books/{id}/progress', [BookController::class, 'progress'])->name('books.progress');
+    Route::match(['put', 'patch'], 'books/{id}/progress', [BookController::class, 'progress'])->name('books.progress');
     Route::apiResource('books', BookController::class)->parameters(['books' => 'id']);
 });
