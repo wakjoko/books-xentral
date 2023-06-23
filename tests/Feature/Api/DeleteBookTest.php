@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class DeleteBookTest extends TestCase
     use WithFaker;
     use WithUser;
     use WithBooks;
-    use WithBookStatuses;
+    use WithBookStatus;
 
     public function setUp(): void
     {
@@ -39,7 +39,7 @@ class DeleteBookTest extends TestCase
     {
         $response = $this->actingAs($this->user)
             ->deleteJson(
-                uri: route('books.destroy', ['id' => $this->books->first()->id])
+                uri: route('books.destroy', ['id' => $this->book->id])
             );
 
         $response->assertNoContent(Response::HTTP_OK);

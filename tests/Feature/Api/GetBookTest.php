@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class GetBookTest extends TestCase
     use WithFaker;
     use WithUser;
     use WithBooks;
-    use WithBookStatuses;
+    use WithBookStatus;
 
     public function setUp(): void
     {
@@ -38,7 +38,7 @@ class GetBookTest extends TestCase
     public function itShouldReturnASuccessfulResponseIfAuthenticatedAndResourceAvailable(): void
     {
         $response = $this->actingAs($this->user)
-            ->get(route(name: 'books.show', parameters: ['id' => $this->books->first()->id]));
+            ->get(route(name: 'books.show', parameters: ['id' => $this->book->id]));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -54,7 +54,7 @@ class GetBookTest extends TestCase
      */
     public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
-        $response = $this->get(route(name: 'books.show', parameters: ['id' => $this->books->first()->id]));
+        $response = $this->get(route(name: 'books.show', parameters: ['id' => $this->book->id]));
 
         $response->assertUnauthorized();
         $response->assertJsonStructure([

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ class CreateBookTest extends TestCase
     use BookStructure;
     use WithFaker;
     use WithUser;
-    use WithBookStatuses;
+    use WithBookStatus;
 
     public function setUp(): void
     {
