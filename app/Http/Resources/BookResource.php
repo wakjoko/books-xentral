@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Traits\ResourceMetaDataTrait;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class BookResource extends JsonResource
@@ -17,7 +18,7 @@ final class BookResource extends JsonResource
     /**
      * Transform the resource into an array.
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         /** @var \App\Models\Book|static $this */
         return [
@@ -26,6 +27,8 @@ final class BookResource extends JsonResource
             'genre' => $this->genre,
             'total_pages' => $this->total_pages,
             'status_id' => $this->status_id,
+            'last_page_read' => $this->last_page_read,
+            'reading_progress' => ReadingProgressResource::collection($this->readingProgresses),
         ];
     }
 }

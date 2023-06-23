@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\UpdateBookProgressAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FindBookRequest;
 use App\Http\Requests\SaveBookRequest;
+use App\Http\Requests\UpdateBookProgressRequest;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\BooksResource;
 use App\Models\Book;
@@ -56,6 +58,20 @@ class BookController extends Controller
         $book->update($request->validated());
 
         return new BookResource($book);
+    }
+
+    /**
+     * Update reading progress of a Book.
+     */
+    public function progress(
+        UpdateBookProgressRequest $request,
+        UpdateBookProgressAction $action
+    ): BookResource {
+        $book = Book::where($request->only('id', 'user_id'))->firstOrFail();
+        $lastPage = $request->last_page;
+        $updatedBook = $action->execute($book, $lastPage);
+
+        return new BookResource($updatedBook);
     }
 
     /**
