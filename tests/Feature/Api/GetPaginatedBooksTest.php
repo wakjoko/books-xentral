@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class GetPaginatedBooksTest extends TestCase
     use WithFaker;
     use WithUser;
     use WithBooks;
-    use WithBookStatuses;
+    use WithBookStatus;
 
     protected int $totalBooks = 100;
 
@@ -31,7 +31,7 @@ class GetPaginatedBooksTest extends TestCase
         parent::setUp();
         $this->createUser();
         $this->createBookStatuses();
-        $this->createBooks();
+        $this->createManyBooks($this->faker->numberBetween(50, 100));
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class UpdateBookTest extends TestCase
     use WithFaker;
     use WithUser;
     use WithBooks;
-    use WithBookStatuses;
+    use WithBookStatus;
 
     public function setUp(): void
     {
@@ -46,7 +46,7 @@ class UpdateBookTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->putJson(
-                uri: route('books.update', ['id' => $this->books->first()->id]),
+                uri: route('books.update', ['id' => $this->book->id]),
                 data: $bookUpdates
             );
 
@@ -71,7 +71,7 @@ class UpdateBookTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->putJson(
-                uri: route('books.update', ['id' => $this->books->first()->id]),
+                uri: route('books.update', ['id' => $this->book->id]),
                 data: $bookUpdates
             );
 

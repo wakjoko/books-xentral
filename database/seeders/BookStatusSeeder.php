@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Traits\WithBookStatuses;
+use App\Traits\WithBookStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BookStatusSeeder extends Seeder
 {
-    use WithoutModelEvents, WithBookStatuses;
+    use WithoutModelEvents, WithBookStatus;
 
     /**
      * Run the database seeds.
