@@ -47,7 +47,7 @@ Continue installation:
 - `docker rmi -f $(docker images -aq)`: remove all docker images
 
 ## Tech stack
-- [**Laravel 9**](https://laravel.com/docs/10.x/) - Core framework
+- [**Laravel 10**](https://laravel.com/docs/10.x/) - Core framework
 - [**PHP 8.1**](https://www.php.net/releases/8.1/en.php) - Language syntax
 - [**Docker**](https://www.docker.com/) - Container platform
 
